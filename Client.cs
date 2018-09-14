@@ -1,9 +1,19 @@
 using System;
+using CSharpFunctions;
+using CSharpFunctions.Toolkit;
 using UseCSharp.Klondike;
 using UseCSharp.UnityGame;
+using CSharpFunctions.Test;
 
 namespace UseCSharp {
   public class Client {
+
+    public static void MainEx(string[] args) {
+      //new TestDateTime().TestRange();
+      // new MatRotate().Start();
+      // new TestNullAction().Test1();
+      new BoardConverterTest().Test2();
+    }
 
     static void printf(object format, params object[] arg) {
       Console.WriteLine(format.ToString(), arg);

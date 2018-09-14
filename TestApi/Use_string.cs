@@ -23,8 +23,8 @@ namespace UseCSharp
     {
       string origin = "ab,cd,ef,gh";
       string remove1 = ",cd";
-      string remove2 = "cd,";
-      string remove3 = "cd";
+      // string remove2 = "cd,";
+      // string remove3 = "cd";
       string after = origin.Remove(origin.IndexOf(remove1), remove1.Length);
       Console.WriteLine(after);
     }
