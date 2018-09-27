@@ -1,9 +1,13 @@
 using System;
+using System.IO;
+using System.Collections;
+using System.Collections.Generic;
+using AlgorithmForce.Searching;
 using CSharpFunctions;
+using CSharpFunctions.Test;
 using CSharpFunctions.Toolkit;
 using UseCSharp.Klondike;
 using UseCSharp.UnityGame;
-using CSharpFunctions.Test;
 
 namespace UseCSharp {
   public class Client {
@@ -12,7 +16,15 @@ namespace UseCSharp {
       //new TestDateTime().TestRange();
       // new MatRotate().Start();
       // new TestNullAction().Test1();
-      new BoardConverterTest().Test2();
+      //new BoardConverterTest().Test2();
+      // ConvertBoardTask.EncodeGameBoardAsset();
+      // ConvertBoardTask.EnsureDecodeCorrect();
+      // ConvertBoardTask.EnsureDecodeBoard();
+      string s = "1231abcdabcd123231abcdabcdabcdtrefabc";
+      var t = new List<char> { 'a', 'b', 'c', 'd', 'a', 'b', 'c', 'd' };
+      foreach (var index in s.IndexesOf(t)) {
+        Console.WriteLine(index); // 4, 18, 22
+      }
     }
 
     static void printf(object format, params object[] arg) {
@@ -38,12 +50,18 @@ namespace UseCSharp {
         "zht"
       });
       //File.WriteAllText("D:\\hpl\\klondike_dev\\klondike_languages.json", pAllTranslate.Convert("D:\\hpl\\klondike_dev\\klondike_translate_summary.c"));
-      //File.WriteAllText("D:\\hpl\\klondike_dev\\klondike_languages_temp.json",
-      //  pAllTranslate.ConvertWithEnKey(new string[] {
-      //    "yes or no open tricks dialog",
-      //    "yes or no open history dialog",
-      //    "yes or no open rules dialog",
-      //  }));
+      File.WriteAllText("D:\\hpl\\klondike_dev\\klondike_languages_temp.json",
+       pAllTranslate.ConvertWithEnKey(new string[] {
+         "notification_message0",
+         "notification_message1",
+         "notification_message2",
+         "notification_message3",
+         "notification_message4",
+         "notification_message5",
+         "notification_message6",
+         "yes or no clear vegas integral",
+         "Google Play is not initialized!"
+       }));
       printf("ok");
       Console.ReadLine();
     }

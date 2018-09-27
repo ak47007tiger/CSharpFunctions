@@ -5,8 +5,8 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace CSharpFunctions{
-  public class BoardConverter{
+namespace CSharpFunctions.Klondike {
+  public class IndexMoveEncodeDecode : IBoardEncodeDecode{
 
     public static readonly int[] indexSwaper_1 = new int[]{
       8,1,24,10,19,17,31,24,1,35,42,21,20,35,41,12,47,4,10,51,36,38,23,50,18,24,32,26,46,9,7,14,14,46,9,31,43,48,13,24,32,24,14,47,25,30,19,21,15,34,36,19
@@ -17,8 +17,15 @@ namespace CSharpFunctions{
 
     Random random = new Random((int)(System.DateTime.Now.Ticks / 5));
 
-    public int[] CreateIndex(int[] input){
+    int[] indexes1;
+    int[] indexes2;
 
+    public void SetIndexes(int[] indexes1, int[] indexes2){
+      this.indexes1 = indexes1;
+      this.indexes2 = indexes2;
+    }
+
+    public int[] CreateIndex(int[] input){
       if(input == null) return input;
 
       var max = input.Length;
@@ -28,30 +35,30 @@ namespace CSharpFunctions{
       return input;
     }
 
-    public int[] ConvertToPsw(int[] origion){
-      return ConvertToPsw(origion, indexSwaper_1, indexSwaper_2);
+    public int[] ToCipher(int[] origion){
+      return ToCipher(origion, indexes1, indexes2);
     }
 
-    public int[] ConvertToPsw(int[] origion, int[] indexes1, int[] indexes2){
-      int[] psw = new int[origion.Length];
-      System.Array.Copy(origion, psw, psw.Length);
-      for(var i = 0; i < psw.Length; i++){
+    public int[] ToCipher(int[] origion, int[] indexes1, int[] indexes2){
+      int[] cipher = new int[origion.Length];
+      System.Array.Copy(origion, cipher, cipher.Length);
+      for(var i = 0; i < cipher.Length; i++){
         var from = indexes1[i];
         var to = indexes2[i];
-        var temp = psw[to];
-        psw[to] = psw[from];
-        psw[from] = temp;
+        var temp = cipher[to];
+        cipher[to] = cipher[from];
+        cipher[from] = temp;
       }
-      return psw;
+      return cipher;
     }
 
-    public int[] ConvertToOrigion(int[] psw){
-      return ConvertToOrigion(psw, indexSwaper_1, indexSwaper_2);
+    public int[] ToOrigion(int[] cipher){
+      return ToOrigion(cipher, indexes1, indexes2);
     }
 
-    public int[] ConvertToOrigion(int[] psw, int[] indexes1, int[] indexes2){
-      int[] origion = new int[psw.Length];
-      System.Array.Copy(psw, origion, origion.Length);
+    public int[] ToOrigion(int[] cipher, int[] indexes1, int[] indexes2){
+      int[] origion = new int[cipher.Length];
+      System.Array.Copy(cipher, origion, origion.Length);
       for(var i = origion.Length - 1; i >= 0; i--){
         var from = indexes2[i];
         var to = indexes1[i];
@@ -61,8 +68,6 @@ namespace CSharpFunctions{
       }
       return origion;
     }
-
-    
 
   }
 }

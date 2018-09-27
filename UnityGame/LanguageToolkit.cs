@@ -1,24 +1,19 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.IO;
 using System.Threading.Tasks;
 using SimpleJSON;
 
-namespace UseCSharp.UnityGame
-{
-  class LanguageToolkit
-  {
-  }
+namespace UseCSharp.UnityGame {
+  class LanguageToolkit { }
 
-  public class PrintAllTranslate
-  {
+  public class PrintAllTranslate {
     string[] languages;
     string languagesJsonStr;
 
-    public void SetLanguages(string[] languages)
-    {
+    public void SetLanguages(string[] languages) {
       this.languages = languages;
       /*
       {
@@ -32,8 +27,7 @@ namespace UseCSharp.UnityGame
       */
       var sbd = new StringBuilder();
       sbd.Append('{');
-      foreach (var language in languages)
-      {
+      foreach (var language in languages) {
         sbd.Append(string.Format("\"{0}\":\"\",", language));
       }
       sbd.Remove(sbd.Length - 1, 1);
@@ -41,18 +35,14 @@ namespace UseCSharp.UnityGame
       languagesJsonStr = sbd.ToString();
     }
 
-    public string Convert(string path)
-    {
+    public string Convert(string path) {
       return Convert(Filter(File.ReadAllText(path).Split('\n')));
     }
 
-    public string[] Filter(string[] lines)
-    {
+    public string[] Filter(string[] lines) {
       var list = new List<string>();
-      foreach (var line in lines)
-      {
-        if (line.Length == 0 || line.StartsWith("//"))
-        {
+      foreach (var line in lines) {
+        if (line.Length == 0 || line.StartsWith("//")) {
           continue;
         }
         list.Add(line);
@@ -60,12 +50,10 @@ namespace UseCSharp.UnityGame
       return list.ToArray();
     }
 
-    public string Convert(string[] summarys)
-    {
+    public string Convert(string[] summarys) {
       var sbd = new StringBuilder();
       sbd.Append('{');
-      foreach (var summary in summarys)
-      {
+      foreach (var summary in summarys) {
         sbd.Append(string.Format("\"{0}\":{1},", summary, languagesJsonStr));
       }
       sbd.Remove(sbd.Length - 1, 1);
@@ -73,11 +61,9 @@ namespace UseCSharp.UnityGame
       return sbd.ToString();
     }
 
-    public string ConvertWithEnKey(string[] summarys)
-    {
+    public string ConvertWithEnKey(string[] summarys) {
       var json = new JSONObject();
-      foreach (var summary in summarys)
-      {
+      foreach (var summary in summarys) {
         var lanJson = JSON.Parse(languagesJsonStr);
         lanJson["en"] = summary;
         json.Add(summary, lanJson);
@@ -85,8 +71,7 @@ namespace UseCSharp.UnityGame
       return json.ToString(1);
     }
 
-    public void TrimJsonFile(string path)
-    {
+    public void TrimJsonFile(string path) {
       var content = JSON.Parse(File.ReadAllText(path)).ToString(1);
       File.WriteAllText(path, content);
     }
